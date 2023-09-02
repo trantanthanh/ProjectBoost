@@ -5,6 +5,7 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody myRigidbody;
+    [SerializeField] private float mainThrust = 5;
 
     void Start()
     {
@@ -22,7 +23,7 @@ public class Movement : MonoBehaviour
     {
         if (Input.GetKey(KeyCode.Space) || Input.GetKey(KeyCode.W))
         {
-            myRigidbody.AddRelativeForce(1, 1, 0);
+            myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             Debug.Log("Thrusting");
         }
     }
