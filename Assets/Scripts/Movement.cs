@@ -5,7 +5,8 @@ using UnityEngine;
 public class Movement : MonoBehaviour
 {
     Rigidbody myRigidbody;
-    [SerializeField] private float mainThrust = 5;
+    [SerializeField] private float mainThrust = 1000f;
+    [SerializeField] float rotationThrust = 50f;
 
     void Start()
     {
@@ -33,10 +34,17 @@ public class Movement : MonoBehaviour
         if (Input.GetKey(KeyCode.A))
         {
             Debug.Log("Rotating Left");
+            ApplyRotation(rotationThrust);
         }
         else if (Input.GetKey(KeyCode.D))
         {
+            ApplyRotation(-rotationThrust);
             Debug.Log("Rotating right");
         }
+    }
+
+    private void ApplyRotation(float rotation)
+    {
+        transform.Rotate(Vector3.forward * rotation * Time.deltaTime);
     }
 }
