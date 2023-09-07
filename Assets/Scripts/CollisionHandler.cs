@@ -1,18 +1,33 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 
 public class CollisionHandler : MonoBehaviour
 {
-    // Start is called before the first frame update
-    void Start()
+    void OnCollisionEnter(Collision other)
     {
-        
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        
+        switch (other.gameObject.tag)
+        {
+            case "Obstacles":
+                {
+                    Debug.Log("Obstacles");
+                    break;
+                }
+            case "Fuel":
+                {
+                    other.gameObject.SetActive(false);
+                    Destroy(other.gameObject);
+                    Debug.Log("Fuel");
+                    break;
+                }
+            case "Start":
+                {
+                    Debug.Log("Start");
+                    break;
+                }
+            case "Finish":
+                {
+                    Debug.Log("Finish");
+                    break;
+                }
+        }
     }
 }
