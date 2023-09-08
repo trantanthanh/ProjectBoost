@@ -52,11 +52,14 @@ public class CollisionHandler : MonoBehaviour
     IEnumerator LoadNextLevel()
     {
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
-        if (nextSceneIndex > SceneManager.GetAllScenes().Length)
+        if (nextSceneIndex > SceneManager.sceneCountInBuildSettings - 1)
         {
             nextSceneIndex = 0;
         }
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene(nextSceneIndex);
+        if (!movement.lostControl)
+        {
+            SceneManager.LoadScene(nextSceneIndex);
+        }
     }
 }
