@@ -1,7 +1,16 @@
+using System.Collections;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    Movement movement;
+
+    void Awake()
+    {
+        movement = GetComponent<Movement>();
+    }
+
     void OnCollisionEnter(Collision other)
     {
         switch (other.gameObject.tag)
@@ -9,6 +18,7 @@ public class CollisionHandler : MonoBehaviour
             case "Obstacles":
                 {
                     Debug.Log("Obstacles");
+                    StartCoroutine(LostControl());
                     break;
                 }
             case "Fuel":
@@ -29,5 +39,12 @@ public class CollisionHandler : MonoBehaviour
                     break;
                 }
         }
+    }
+
+    IEnumerator LostControl()
+    {
+        movement.lostControl = true;
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene("Sandbox");
     }
 }

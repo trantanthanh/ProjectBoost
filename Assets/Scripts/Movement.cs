@@ -8,6 +8,7 @@ public class Movement : MonoBehaviour
     [SerializeField] private float mainThrust = 1000f;
     [SerializeField] float rotationThrust = 50f;
     AudioSource audioSource;
+    public bool lostControl = false;
 
     void Start()
     {
@@ -18,8 +19,18 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        ProcessThrust();
-        ProcessRotation();
+        if (!lostControl)
+        {
+            ProcessThrust();
+            ProcessRotation();
+        }
+        else
+        {
+            if (audioSource.isPlaying)
+            {
+                audioSource.Stop();
+            }
+        }
     }
 
     void ProcessThrust()
