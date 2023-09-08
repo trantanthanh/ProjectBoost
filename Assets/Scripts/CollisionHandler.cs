@@ -35,6 +35,7 @@ public class CollisionHandler : MonoBehaviour
                 }
             case "Finish":
                 {
+                    StartCoroutine(LoadNextLevel());
                     Debug.Log("Finish");
                     break;
                 }
@@ -45,6 +46,17 @@ public class CollisionHandler : MonoBehaviour
     {
         movement.lostControl = true;
         yield return new WaitForSeconds(2);
-        SceneManager.LoadScene("Sandbox");
+        SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
+    }
+
+    IEnumerator LoadNextLevel()
+    {
+        int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
+        if (nextSceneIndex > SceneManager.GetAllScenes().Length)
+        {
+            nextSceneIndex = 0;
+        }
+        yield return new WaitForSeconds(2);
+        SceneManager.LoadScene(nextSceneIndex);
     }
 }
