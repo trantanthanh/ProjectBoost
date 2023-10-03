@@ -7,6 +7,7 @@ public class Movement : MonoBehaviour
     Rigidbody myRigidbody;
     [SerializeField] private float mainThrust = 1000f;
     [SerializeField] float rotationThrust = 50f;
+    [SerializeField] AudioClip sfxEngine;
     AudioSource audioSource;
     public bool lostControl = false;
 
@@ -24,13 +25,6 @@ public class Movement : MonoBehaviour
             ProcessThrust();
             ProcessRotation();
         }
-        else
-        {
-            if (audioSource.isPlaying)
-            {
-                audioSource.Stop();
-            }
-        }
     }
 
     void ProcessThrust()
@@ -39,14 +33,14 @@ public class Movement : MonoBehaviour
         {
             if (!audioSource.isPlaying)
             {
-                audioSource.Play();
+                audioSource.PlayOneShot(sfxEngine);
             }
             myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             Debug.Log("Thrusting");
         }
         else
         {
-            if (audioSource.isPlaying)
+            if (!lostControl && audioSource.isPlaying)
             {
                 audioSource.Stop();
             }

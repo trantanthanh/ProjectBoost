@@ -4,11 +4,17 @@ using UnityEngine.SceneManagement;
 
 public class CollisionHandler : MonoBehaviour
 {
+    [SerializeField] float timeDelayLoad = 2f;
+    [SerializeField] AudioClip sfxDead;
+    [SerializeField] AudioClip sfxSucess;
+    AudioSource audioSource;
+    
     Movement movement;
 
-    void Awake()
+    void Start()
     {
         movement = GetComponent<Movement>();
+        audioSource = GetComponent<AudioSource>();
     }
 
     void OnCollisionEnter(Collision other)
@@ -44,8 +50,12 @@ public class CollisionHandler : MonoBehaviour
 
     IEnumerator LostControl()
     {
+        if (!movement.lostControl)
+        {
+            audioSource.PlayOneShot(sfxDead);
+        }
         movement.lostControl = true;
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(timeDelayLoad);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
 
@@ -56,7 +66,8 @@ public class CollisionHandler : MonoBehaviour
         {
             nextSceneIndex = 0;
         }
-        yield return new WaitForSeconds(2);
+        audioSource.PlayOneShot(sfxSucess);
+        yield return new WaitForSeconds(timeDelayLoad);
         if (!movement.lostControl)
         {
             SceneManager.LoadScene(nextSceneIndex);
