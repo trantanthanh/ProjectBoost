@@ -9,18 +9,21 @@ public class Movement : MonoBehaviour
     [SerializeField] float rotationThrust = 50f;
     [SerializeField] AudioClip sfxEngine;
     AudioSource audioSource;
+
+    CollisionHandler collisionHandler;
     public bool lostControl = false;
 
     void Start()
     {
         myRigidbody = GetComponent<Rigidbody>();
         audioSource = GetComponent<AudioSource>();
+        collisionHandler = GetComponent<CollisionHandler>();
     }
 
     // Update is called once per frame
     void Update()
     {
-        if (!lostControl)
+        if (!lostControl && !collisionHandler.isTransitioning)
         {
             ProcessThrust();
             ProcessRotation();
@@ -40,7 +43,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if (!lostControl && audioSource.isPlaying)
+            if (!collisionHandler.isTransitioning && audioSource.isPlaying)
             {
                 audioSource.Stop();
             }
