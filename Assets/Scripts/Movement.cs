@@ -32,6 +32,12 @@ public class Movement : MonoBehaviour
             ProcessRotation();
         }
     }
+    public void StopThrustEffect()
+    {
+        thrustEffect.Stop();
+        leftThrustEffect.Stop();
+        rightThrustEffect.Stop();
+    }
 
     void ProcessThrust()
     {
@@ -41,12 +47,16 @@ public class Movement : MonoBehaviour
             {
                 audioSource.PlayOneShot(sfxEngine);
             }
-            thrustEffect.Play();
+            if (!thrustEffect.isPlaying)
+            {
+                thrustEffect.Play();
+            }
             myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             Debug.Log("Thrusting");
         }
         else
         {
+            thrustEffect.Stop();
             if (!collisionHandler.isTransitioningNextLevel && !collisionHandler.isTransitioningReloadLevel && audioSource.isPlaying)
             {
                 audioSource.Stop();
@@ -60,13 +70,26 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("Rotating Left");
             ApplyRotation(rotationThrust);
-            rightThrustEffect.Play();
+            leftThrustEffect.Stop();
+            if (!rightThrustEffect.isPlaying)
+            {
+                rightThrustEffect.Play();
+            }
         }
         else if (Input.GetKey(KeyCode.D))
         {
             ApplyRotation(-rotationThrust);
             Debug.Log("Rotating right");
-            leftThrustEffect.Play();
+            rightThrustEffect.Stop();
+            if (!leftThrustEffect.isPlaying)
+            {
+                leftThrustEffect.Play();
+            }
+        }
+        else
+        {
+            leftThrustEffect.Stop();
+            rightThrustEffect.Stop();
         }
     }
 

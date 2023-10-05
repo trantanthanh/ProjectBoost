@@ -63,6 +63,7 @@ public class CollisionHandler : MonoBehaviour
         audioSource.PlayOneShot(sfxDead);
         crashEffect.Play();
         movement.lostControl = true;
+        movement.StopThrustEffect();
         yield return new WaitForSeconds(timeDelayLoad);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
     }
@@ -77,6 +78,7 @@ public class CollisionHandler : MonoBehaviour
         audioSource.Stop();
         sucessEffect.Play();
         audioSource.PlayOneShot(sfxSucess);
+        movement.StopThrustEffect();
         yield return new WaitForSeconds(timeDelayLoad);
         if (!movement.lostControl)
         {
