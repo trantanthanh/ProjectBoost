@@ -7,6 +7,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] float timeDelayLoad = 2f;
     [SerializeField] AudioClip sfxDead;
     [SerializeField] AudioClip sfxSucess;
+    [SerializeField] ParticleSystem crashEffect;
+    [SerializeField] ParticleSystem sucessEffect;
 
     [HideInInspector] public bool isTransitioning = false;
     AudioSource audioSource;
@@ -21,7 +23,6 @@ public class CollisionHandler : MonoBehaviour
 
     void OnCollisionEnter(Collision other)
     {
-        if (isTransitioning) return;
         switch (other.gameObject.tag)
         {
             case "Obstacles":
@@ -44,6 +45,7 @@ public class CollisionHandler : MonoBehaviour
                 }
             case "Finish":
                 {
+                    if (isTransitioning) return;
                     StartCoroutine(LoadNextLevel());
                     Debug.Log("Finish");
                     break;
@@ -56,6 +58,7 @@ public class CollisionHandler : MonoBehaviour
         isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(sfxDead);
+        crashEffect.Play();
         movement.lostControl = true;
         yield return new WaitForSeconds(timeDelayLoad);
         SceneManager.LoadScene(SceneManager.GetActiveScene().buildIndex);
@@ -70,6 +73,7 @@ public class CollisionHandler : MonoBehaviour
             nextSceneIndex = 0;
         }
         audioSource.Stop();
+        sucessEffect.Play();
         audioSource.PlayOneShot(sfxSucess);
         yield return new WaitForSeconds(timeDelayLoad);
         if (!movement.lostControl)
