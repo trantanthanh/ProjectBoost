@@ -8,6 +8,9 @@ public class Movement : MonoBehaviour
     [SerializeField] private float mainThrust = 1000f;
     [SerializeField] float rotationThrust = 50f;
     [SerializeField] AudioClip sfxEngine;
+    [SerializeField] ParticleSystem thrustEffect;
+    [SerializeField] ParticleSystem leftThrustEffect;
+    [SerializeField] ParticleSystem rightThrustEffect;
     AudioSource audioSource;
 
     CollisionHandler collisionHandler;
@@ -38,6 +41,7 @@ public class Movement : MonoBehaviour
             {
                 audioSource.PlayOneShot(sfxEngine);
             }
+            thrustEffect.Play();
             myRigidbody.AddRelativeForce(Vector3.up * mainThrust * Time.deltaTime);
             Debug.Log("Thrusting");
         }
@@ -56,11 +60,13 @@ public class Movement : MonoBehaviour
         {
             Debug.Log("Rotating Left");
             ApplyRotation(rotationThrust);
+            rightThrustEffect.Play();
         }
         else if (Input.GetKey(KeyCode.D))
         {
             ApplyRotation(-rotationThrust);
             Debug.Log("Rotating right");
+            leftThrustEffect.Play();
         }
     }
 

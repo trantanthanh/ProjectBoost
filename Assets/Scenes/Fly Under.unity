@@ -123,6 +123,11 @@ NavMeshSettings:
     debug:
       m_Flags: 0
   m_NavMeshData: {fileID: 0}
+--- !u!198 &593491927 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 3754800682851839226, guid: 65bb8382715390144b299ab17bbcfd48, type: 3}
+  m_PrefabInstance: {fileID: 6432815332130216664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &705507993
 GameObject:
   m_ObjectHideFlags: 0
@@ -301,6 +306,11 @@ Transform:
   m_Father: {fileID: 1311662761}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!198 &1152837524 stripped
+ParticleSystem:
+  m_CorrespondingSourceObject: {fileID: 5499820777537195615, guid: 65bb8382715390144b299ab17bbcfd48, type: 3}
+  m_PrefabInstance: {fileID: 6432815332130216664}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1311662760
 GameObject:
   m_ObjectHideFlags: 0
@@ -515,6 +525,14 @@ PrefabInstance:
   m_Modification:
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 1205781579, guid: 65bb8382715390144b299ab17bbcfd48, type: 3}
+      propertyPath: leftThrustEffect
+      value: 
+      objectReference: {fileID: 1152837524}
+    - target: {fileID: 1205781579, guid: 65bb8382715390144b299ab17bbcfd48, type: 3}
+      propertyPath: rightThrustEffect
+      value: 
+      objectReference: {fileID: 593491927}
     - target: {fileID: 6432815332791870771, guid: 65bb8382715390144b299ab17bbcfd48, type: 3}
       propertyPath: m_Name
       value: Rocket
