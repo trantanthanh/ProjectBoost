@@ -10,7 +10,8 @@ public class CollisionHandler : MonoBehaviour
     [SerializeField] ParticleSystem crashEffect;
     [SerializeField] ParticleSystem sucessEffect;
 
-    [HideInInspector] public bool isTransitioning = false;
+    [HideInInspector] public bool isTransitioningNextLevel = false;
+    [HideInInspector] public bool isTransitioningReloadLevel = false;
     AudioSource audioSource;
 
     Movement movement;
@@ -27,6 +28,8 @@ public class CollisionHandler : MonoBehaviour
         {
             case "Obstacles":
                 {
+                    if (isTransitioningReloadLevel) return;
+                    isTransitioningReloadLevel = true;
                     Debug.Log("Obstacles");
                     StartCoroutine(LostControl());
                     break;
@@ -45,7 +48,8 @@ public class CollisionHandler : MonoBehaviour
                 }
             case "Finish":
                 {
-                    if (isTransitioning) return;
+                    if (isTransitioningNextLevel) return;
+                    isTransitioningNextLevel = true;
                     StartCoroutine(LoadNextLevel());
                     Debug.Log("Finish");
                     break;
@@ -55,7 +59,6 @@ public class CollisionHandler : MonoBehaviour
 
     IEnumerator LostControl()
     {
-        isTransitioning = true;
         audioSource.Stop();
         audioSource.PlayOneShot(sfxDead);
         crashEffect.Play();
@@ -66,7 +69,6 @@ public class CollisionHandler : MonoBehaviour
 
     IEnumerator LoadNextLevel()
     {
-        isTransitioning = true;
         int nextSceneIndex = SceneManager.GetActiveScene().buildIndex + 1;
         if (nextSceneIndex > SceneManager.sceneCountInBuildSettings - 1)
         {

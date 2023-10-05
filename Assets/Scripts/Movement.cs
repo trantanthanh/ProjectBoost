@@ -26,7 +26,7 @@ public class Movement : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if (!lostControl && !collisionHandler.isTransitioning)
+        if (!lostControl && !collisionHandler.isTransitioningNextLevel && !collisionHandler.isTransitioningReloadLevel)
         {
             ProcessThrust();
             ProcessRotation();
@@ -47,7 +47,7 @@ public class Movement : MonoBehaviour
         }
         else
         {
-            if (!collisionHandler.isTransitioning && audioSource.isPlaying)
+            if (!collisionHandler.isTransitioningNextLevel && !collisionHandler.isTransitioningReloadLevel && audioSource.isPlaying)
             {
                 audioSource.Stop();
             }
