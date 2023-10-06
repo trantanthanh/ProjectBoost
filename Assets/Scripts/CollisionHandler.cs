@@ -12,6 +12,7 @@ public class CollisionHandler : MonoBehaviour
 
     [HideInInspector] public bool isTransitioningNextLevel = false;
     [HideInInspector] public bool isTransitioningReloadLevel = false;
+    bool collisionDisable = false;
     AudioSource audioSource;
 
     Movement movement;
@@ -22,8 +23,26 @@ public class CollisionHandler : MonoBehaviour
         audioSource = GetComponent<AudioSource>();
     }
 
+    void Update()
+    {
+        ResponseToDebugKey();
+    }
+
+    private void ResponseToDebugKey()
+    {
+        if (Input.GetKeyDown(KeyCode.L))
+        {
+            StartCoroutine(LoadNextLevel());
+        }
+        else if (Input.GetKeyDown(KeyCode.C))
+        {
+            collisionDisable = !collisionDisable; //Toggle collision
+        }
+    }
+
     void OnCollisionEnter(Collision other)
     {
+        if (collisionDisable) return;
         switch (other.gameObject.tag)
         {
             case "Obstacles":
